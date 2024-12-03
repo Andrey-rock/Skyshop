@@ -5,6 +5,9 @@ public class Product {
     private int cost;
 
     public Product(String name, int cost) {
+        if (cost < 0) {
+            throw new IllegalArgumentException("Цена не может быть отрицательной");
+        }
         this.name = name;
         this.cost = cost;
     }

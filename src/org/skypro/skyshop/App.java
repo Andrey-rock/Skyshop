@@ -12,6 +12,7 @@ public class App {
         Product p4 = new Product("Кофе", 350);
         Product p5 = new Product("Пельмени", 280);
         Product p6 = new Product("Торт", 600);
+        System.out.println();
 
         //Создание корзины
         ProductBasket basket = new ProductBasket();

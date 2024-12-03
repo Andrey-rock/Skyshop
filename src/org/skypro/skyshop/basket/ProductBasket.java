@@ -6,12 +6,14 @@ import java.util.Arrays;
 
 public class ProductBasket {
     private final Product[] products = new Product[5];
+    private int productCount = 0;
 
     public void addProduct(Product product) {
         for (int i = 0; i < products.length; i++) {
             if (products[i] == null) {
                 products[i] = product;
                 System.out.println("Продукт добавлен");
+                productCount++;
                 return;
             }
         }
@@ -23,27 +25,24 @@ public class ProductBasket {
         for (Product product : products) {
             if (product != null) {
                 sum += product.getCost();
-            } else {
-                return sum;
             }
         }
         return sum;
     }
 
     public void printBasket() {
-        boolean isBasketEmpty = true;
+        if (productCount == 0) {
+            System.out.println("в корзине пусто");
+            return;
+        }
         for (Product product : products) {
             if (product != null) {
                 System.out.println(product.getName() + ": " + product.getCost());
-                isBasketEmpty = false;
             }
         }
-        if (isBasketEmpty) {
-            System.out.println("в корзине пусто");
-        } else {
-            System.out.println("Итого: " + totalCostBasket());
-        }
+        System.out.println("Итого: " + totalCostBasket());
     }
+
 
     public boolean isProductExists(String productName) {
         for (Product product : products) {
@@ -56,6 +55,7 @@ public class ProductBasket {
 
     public void clearBasket() {
         Arrays.fill(products, null);
+        productCount = 0;
         System.out.println("Корзина очищена");
     }
 }
