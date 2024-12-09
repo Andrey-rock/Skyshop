@@ -7,6 +7,7 @@ import java.util.Arrays;
 public class ProductBasket {
     private final Product[] products = new Product[5];
     private int productCount = 0;
+    private int specialProductCount = 0;
 
     public void addProduct(Product product) {
         for (int i = 0; i < products.length; i++) {
@@ -24,7 +25,7 @@ public class ProductBasket {
         int sum = 0;
         for (Product product : products) {
             if (product != null) {
-                sum += product.getCost();
+                sum += product.getPrice();
             }
         }
         return sum;
@@ -37,10 +38,14 @@ public class ProductBasket {
         }
         for (Product product : products) {
             if (product != null) {
-                System.out.println(product.getName() + ": " + product.getCost());
+                if (product.isSpecial()) {
+                    specialProductCount++;
+                }
+                System.out.println(product);
             }
         }
         System.out.println("Итого: " + totalCostBasket());
+        System.out.println("Специальных товаров: " + specialProductCount);
     }
 
 
