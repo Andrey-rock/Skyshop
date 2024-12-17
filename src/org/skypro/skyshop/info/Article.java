@@ -3,8 +3,8 @@ package org.skypro.skyshop.info;
 import org.skypro.skyshop.service.Searchable;
 
 public final class Article implements Searchable {
-    String title;
-    String content;
+    private final String title;
+    private final String content;
 
     public Article(String title, String content) {
         this.title = title;
