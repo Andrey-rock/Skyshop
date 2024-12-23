@@ -2,23 +2,28 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class ProductBasket {
-    //Выбираем LinkedList т.к. не нужен доступ по индексу и удаление будет производиться с помощью Итератора.
-    private final List<Product> products = new LinkedList<>();
+    //Выбираем HashMap для хранения продуктов
+    private final HashMap<String, LinkedList<Product>> products = new HashMap<>();
 
     public void addProduct(Product product) {
-        products.add(product);
+        if (products.containsKey(product.getName())) {
+            products.get(product.getName()).add(product);
+        } else {
+            products.put(product.getName(), new LinkedList<>());
+            products.get(product.getName()).add(product);
+        }
         System.out.println("Продукт добавлен");
     }
 
     public int totalCostBasket() {
         int sum = 0;
-        for (Product product : products) {
-            sum += product.getPrice();
+        for (Map.Entry<String, LinkedList<Product>> entry : products.entrySet()) {
+            for (Product product : entry.getValue()) {
+                sum += product.getPrice();
+            }
         }
         return sum;
     }
@@ -29,11 +34,15 @@ public class ProductBasket {
             System.out.println("в корзине пусто");
             return;
         }
-        for (Product product : products) {
-            if (product.isSpecial()) {
-                specialProductCount++;
+        for (Map.Entry<String, LinkedList<Product>> entry : products.entrySet()) {
+            System.out.println(entry.getKey() + " - " + entry.getValue().size() + "шт.");
+            for (Product product : entry.getValue()) {
+                if (product.isSpecial()) {
+                    specialProductCount++;
+                }
+                System.out.println(product);
             }
-            System.out.println(product);
+            System.out.println();
         }
         System.out.println("Итого: " + totalCostBasket());
         System.out.println("Специальных товаров: " + specialProductCount);
@@ -41,9 +50,11 @@ public class ProductBasket {
 
 
     public boolean isProductExists(String productName) {
-        for (Product product : products) {
-            if (product.getName().equals(productName)) {
-                return true;
+        for (Map.Entry<String, LinkedList<Product>> entry : products.entrySet()) {
+            for (Product product : entry.getValue()) {
+                if (product.getName().equals(productName)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -56,14 +67,16 @@ public class ProductBasket {
 
     public List<Product> removeProduct(String name) {
         List<Product> removedProducts = new LinkedList<>();
-        Iterator<Product> iterator = products.iterator();
-        while (iterator.hasNext()) {
-            Product product = iterator.next();
-            if (product.getName().equals(name)) {
-                removedProducts.add(product);
-                iterator.remove();
+        for (Map.Entry<String, LinkedList<Product>> entry : products.entrySet()) {
+            Iterator<Product> iterator = entry.getValue().iterator();
+            while (iterator.hasNext()) {
+                Product product = iterator.next();
+                if (product.getName().equals(name)) {
+                    removedProducts.add(product);
+                }
             }
         }
+        products.remove(name);
         return removedProducts;
     }
 }
