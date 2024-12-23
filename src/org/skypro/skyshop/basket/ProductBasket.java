@@ -9,12 +9,8 @@ public class ProductBasket {
     private final HashMap<String, LinkedList<Product>> products = new HashMap<>();
 
     public void addProduct(Product product) {
-        if (products.containsKey(product.getName())) {
-            products.get(product.getName()).add(product);
-        } else {
-            products.put(product.getName(), new LinkedList<>());
-            products.get(product.getName()).add(product);
-        }
+        products.computeIfAbsent(product.getName(), (k -> new LinkedList<>())).
+                add(product);
         System.out.println("Продукт добавлен");
     }
 
@@ -50,14 +46,7 @@ public class ProductBasket {
 
 
     public boolean isProductExists(String productName) {
-        for (Map.Entry<String, LinkedList<Product>> entry : products.entrySet()) {
-            for (Product product : entry.getValue()) {
-                if (product.getName().equals(productName)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return products.containsKey(productName);
     }
 
     public void clearBasket() {
@@ -66,17 +55,8 @@ public class ProductBasket {
     }
 
     public List<Product> removeProduct(String name) {
-        List<Product> removedProducts = new LinkedList<>();
-        for (Map.Entry<String, LinkedList<Product>> entry : products.entrySet()) {
-            Iterator<Product> iterator = entry.getValue().iterator();
-            while (iterator.hasNext()) {
-                Product product = iterator.next();
-                if (product.getName().equals(name)) {
-                    removedProducts.add(product);
-                }
-            }
-        }
+        List<Product> removedProducts = products.get(name);
         products.remove(name);
-        return removedProducts;
+        return removedProducts == null ? Collections.emptyList() : removedProducts;
     }
 }
