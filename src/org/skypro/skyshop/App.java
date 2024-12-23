@@ -9,8 +9,6 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.service.SearchEngine;
 import org.skypro.skyshop.service.Searchable;
-
-import java.util.Arrays;
 import java.util.List;
 
 public class App {
