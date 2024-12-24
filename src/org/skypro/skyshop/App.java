@@ -9,31 +9,11 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.service.SearchEngine;
 import org.skypro.skyshop.service.Searchable;
-import java.util.List;
+
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) throws BestResultNotFound {
-        //Создание продуктов с ошибками
-//        try {
-//            Product p11 = new SimpleProduct(" ", 30);
-//        } catch (IllegalArgumentException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        try {
-//            Product p12 = new DiscountedProduct("Чай", -10, 10);
-//        } catch (IllegalArgumentException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        try {
-//            Product p13 = new SimpleProduct("Кофе", 0);
-//        } catch (IllegalArgumentException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        try {
-//            Product p14 = new DiscountedProduct("Пельмени", 280, 120);
-//        } catch (IllegalArgumentException e) {
-//            System.out.println(e.getMessage());
-//        }
 
         //Создание продуктов
         Product p1 = new FixPriceProduct("Масло");
@@ -49,6 +29,7 @@ public class App {
         Article a2 = new Article("Пельмени", "Пельмени в русской традиции");
         Article a3 = new Article("Капуста", "Десять блюд из капусты");
         Article a4 = new Article("Кофе. История", "Кофе: арабика и робуста");
+        Article a6 = new Article("Арбуз. История", "Арбуз: тут что-то про арбуз");
         Article a5 = new Article("Чай", "Чай бла бла бла. Чай бла бла бла...");
 
 
@@ -68,7 +49,7 @@ public class App {
         searchEngine.add(p3);
         searchEngine.add(p3);
         searchEngine.add(p3);
-        searchEngine.add(a3);
+        searchEngine.add(a6);
         searchEngine.add(p4);
         searchEngine.add(p5);
         searchEngine.add(p2);
@@ -76,14 +57,14 @@ public class App {
 
         //Тест поиска
         System.out.println("Поиск");
-        List<Searchable> result1 = searchEngine.search("Капуста");
-        List<Searchable> result2 = searchEngine.search("Чай");
-        List<Searchable> result3 = searchEngine.search("История");
+        Map<String, Searchable> result1 = searchEngine.search("Капуста");
+        Map<String, Searchable> result2 = searchEngine.search("Чай");
+        Map<String, Searchable> result3 = searchEngine.search("История");
         Searchable result4 = searchEngine.exactSearch("Чай");
         //Поиск с ошибкой
         System.out.println("Поиск с ошибкой:");
         try {
-            Searchable result5 = searchEngine.exactSearch("Апельсин");
+            searchEngine.exactSearch("Апельсин");
         } catch (BestResultNotFound e) {
             System.out.println(e);
         }
