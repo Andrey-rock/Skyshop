@@ -9,8 +9,7 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.service.SearchEngine;
 import org.skypro.skyshop.service.Searchable;
-
-import java.util.Map;
+import java.util.Set;
 
 public class App {
     public static void main(String[] args) throws BestResultNotFound {
@@ -25,13 +24,20 @@ public class App {
         System.out.println();
 
         //Создание статей
-        Article a1 = new Article("Чай. История", "Чай китайский и индийский");
+        Article a1 = new Article("Чай. История.", "Чай китайский и индийский");
         Article a2 = new Article("Пельмени", "Пельмени в русской традиции");
         Article a3 = new Article("Капуста", "Десять блюд из капусты");
-        Article a4 = new Article("Кофе. История", "Кофе: арабика и робуста");
-        Article a6 = new Article("Арбуз. История", "Арбуз: тут что-то про арбуз");
-        Article a5 = new Article("Чай", "Чай бла бла бла. Чай бла бла бла...");
-
+        Article a4 = new Article("Кофе. История.", "Кофе: арабика и робуста");
+        Article a6 = new Article("Арбуз. История.", "Арбуз: тут что-то про арбуз");
+        Article a5 = new Article("Чай черный", "Чай бла бла бла. Чай бла бла бла...");
+        Article a7 = new Article("Чай зелёный", "Тут очень очень большой текст про чай. Чай бла бла бла...");
+        Article a8 = new Article("Чай в пакетах", "Короткий текст");
+        Article a9 = new Article("Продукт 3", "Короткий текст");
+        Article a10 = new Article("Продукт А", "Короткий текст");
+        Article a11 = new Article("Продукт 1", "Короткий текст");
+        Article a12 = new Article("Продукт Я", "Короткий текст");
+        Article a13 = new Article("Продукт Г", "Короткий текст");
+        Article a14 = new Article("Продукт 2", "Короткий текст");
 
         //Создание поискового движка
         SearchEngine searchEngine = new SearchEngine();
@@ -53,14 +59,23 @@ public class App {
         searchEngine.add(p4);
         searchEngine.add(p5);
         searchEngine.add(p2);
+        searchEngine.add(a7);
+        searchEngine.add(a8);
+        searchEngine.add(a9);
+        searchEngine.add(a10);
+        searchEngine.add(a11);
+        searchEngine.add(a12);
+        searchEngine.add(a13);
+        searchEngine.add(a14);
         System.out.println();
 
         //Тест поиска
         System.out.println("Поиск");
-        Map<String, Searchable> result1 = searchEngine.search("Капуста");
-        Map<String, Searchable> result2 = searchEngine.search("Чай");
-        Map<String, Searchable> result3 = searchEngine.search("История");
+        Set<Searchable> result1 = searchEngine.search("Капуста");
+        Set<Searchable> result2 = searchEngine.search("Чай");
+        Set<Searchable> result3 = searchEngine.search("История");
         Searchable result4 = searchEngine.exactSearch("Чай");
+        Set<Searchable> result5 = searchEngine.search("Продукт");
         //Поиск с ошибкой
         System.out.println("Поиск с ошибкой:");
         try {
@@ -72,6 +87,7 @@ public class App {
 
         //Печать результатов поиска
         System.out.println("Результат поиска:");
+        System.out.println();
         System.out.println(result1);
         System.out.println();
         System.out.println(result2);
@@ -80,6 +96,8 @@ public class App {
         System.out.println();
         System.out.println("Результат поиска самого подходящего элемента Searchable: ");
         System.out.println(result4);
+        System.out.println();
+        System.out.println(result5);
         System.out.println();
 
 
